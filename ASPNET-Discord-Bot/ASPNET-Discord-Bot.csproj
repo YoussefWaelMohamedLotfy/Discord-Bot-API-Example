@@ -7,4 +7,8 @@
     <RootNamespace>ASPNET_Discord_Bot</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+  </ItemGroup>
+
 </Project>
