@@ -1,3 +1,4 @@
+using ASPNET_Discord_Bot.HostedServices;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +13,10 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 // Configure DI Services
-
+builder.Services.AddHostedService<DiscordBotInitializer>();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Welcome to ASP.NET Discord Bot!");
 
 app.Run();
