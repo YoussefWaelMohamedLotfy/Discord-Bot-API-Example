@@ -46,13 +46,7 @@ public class MessageReceivedHandler : INotificationHandler<MessageReceivedNotifi
 
         // Execute the command with the command context we just
         // created, along with the service provider for precondition checks.
-        var result = await _commands.ExecuteAsync(context: context, argPos: argPos, services: _provider);
-
-        if (!result.IsSuccess)
-            _logger.LogError("Client Error: {BotError}", result.ErrorReason);
-
-        if (result.Error.Equals(CommandError.UnmetPrecondition))
-            await message.Channel.SendMessageAsync(result.ErrorReason);
+        await _commands.ExecuteAsync(context: context, argPos: argPos, services: _provider);
 
         await Task.CompletedTask;
     }

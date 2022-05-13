@@ -30,19 +30,25 @@ public class DiscordBotEventListener
     public async Task StartAsync()
     {
         _client.Log += OnLogReceivedAsync;
+        _commands.Log += OnLogReceivedAsync;
 
         await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _provider);
         _client.MessageReceived += OnMessageReceivedAsync;
         _client.ChannelCreated += OnChannelCreatedAsync;
 
+        _commands.CommandExecuted += OnCommandExecutedAsync;
+
         await Task.CompletedTask;
     }
+
+    private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, Discord.Commands.IResult result)
+        => await _mediator.Publish(new CommandExecutedNotification(command, context, result), _cancellationToken);
 
     private async Task OnChannelCreatedAsync(SocketChannel socketChannel)
         => await _mediator.Publish(new ChannelCreatedNotification(socketChannel), _cancellationToken);
 
-    private async Task OnLogReceivedAsync(LogMessage arg)
-        => await _mediator.Publish(new LogNotification(arg), _cancellationToken);
+    private async Task OnLogReceivedAsync(LogMessage logMessage)
+        => await _mediator.Publish(new LogNotification(logMessage), _cancellationToken);
 
     private async Task OnMessageReceivedAsync(SocketMessage socketMessage)
         => await _mediator.Publish(new MessageReceivedNotification(socketMessage), _cancellationToken);
