@@ -31,15 +31,6 @@ public class DiscordBotInitializer : IHostedService
         await Task.CompletedTask;
     }
 
-    //private async Task OnChannelCreated(SocketChannel arg)
-    //{
-    //    if (arg as ITextChannel is null)
-    //        return;
-
-    //    var channel = arg as ITextChannel;
-    //    await channel!.SendMessageAsync("Welcome to the new Channel");
-    //}
-
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         await _client.LogoutAsync();

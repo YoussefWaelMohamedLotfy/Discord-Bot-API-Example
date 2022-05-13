@@ -33,9 +33,13 @@ public class DiscordBotEventListener
 
         await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _provider);
         _client.MessageReceived += OnMessageReceivedAsync;
+        _client.ChannelCreated += OnChannelCreatedAsync;
 
         await Task.CompletedTask;
     }
+
+    private async Task OnChannelCreatedAsync(SocketChannel socketChannel)
+        => await _mediator.Publish(new ChannelCreatedNotification(socketChannel), _cancellationToken);
 
     private async Task OnLogReceivedAsync(LogMessage arg)
         => await _mediator.Publish(new LogNotification(arg), _cancellationToken);
