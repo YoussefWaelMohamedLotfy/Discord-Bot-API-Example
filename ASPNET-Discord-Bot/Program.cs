@@ -1,4 +1,5 @@
 using ASPNET_Discord_Bot.HostedServices;
+using ASPNET_Discord_Bot.Services;
 using Discord.Commands;
 using Discord.WebSocket;
 using MediatR;
@@ -20,6 +21,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddSingleton<DiscordSocketClient>();
 builder.Services.AddSingleton<CommandService>();
 builder.Services.AddSingleton<DiscordBotEventListener>();
+builder.Services.AddSingleton<ImageService>();
 
 builder.Services.AddHostedService<DiscordBotInitializer>();
 
