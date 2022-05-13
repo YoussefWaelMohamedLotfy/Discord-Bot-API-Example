@@ -8,8 +8,5 @@ public class MessageReceivedNotification : INotification
     public SocketMessage Message { get; }
 
     public MessageReceivedNotification(SocketMessage message)
-    {
-        Message = message ?? throw new ArgumentNullException(nameof(message));
-    }
-
+        => Message = message ?? throw new ArgumentNullException(nameof(message));
 }
