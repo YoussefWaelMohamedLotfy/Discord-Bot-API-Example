@@ -15,7 +15,7 @@ public class ModerationModule : ModuleBase<SocketCommandContext>
 
     [Command("purge")]
     [RequireUserPermission(GuildPermission.ManageMessages)]
-    public async Task Purge(int amount)
+    public async Task Purge(int amount = 100)
     {
         var messages = await Context.Channel.GetMessagesAsync(amount + 1).FlattenAsync();
         await (Context.Channel as SocketTextChannel)!.DeleteMessagesAsync(messages);

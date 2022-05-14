@@ -35,11 +35,15 @@ public class DiscordBotEventListener
         await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _provider);
         _client.MessageReceived += OnMessageReceivedAsync;
         _client.ChannelCreated += OnChannelCreatedAsync;
+        _client.JoinedGuild += OnJoinedGuildAsync;
 
         _commands.CommandExecuted += OnCommandExecutedAsync;
 
         await Task.CompletedTask;
     }
+
+    private async Task OnJoinedGuildAsync(SocketGuild arg)
+        => await _mediator.Publish(new GuildJoinedNotification(arg), _cancellationToken);
 
     private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, Discord.Commands.IResult result)
         => await _mediator.Publish(new CommandExecutedNotification(command, context, result), _cancellationToken);
