@@ -6,7 +6,9 @@ using Discord.WebSocket;
 using MediatR;
 using Serilog;
 using System.Reflection;
+using System.Text;
 
+Console.OutputEncoding = Encoding.UTF8;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Host

@@ -1,4 +1,5 @@
 ﻿using ASPNET_Discord_Bot.Notifications;
+using ASPNET_Discord_Bot.Notifications.Reactions;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -35,11 +36,19 @@ public class DiscordBotEventListener
         _client.MessageReceived += OnMessageReceivedAsync;
         _client.ChannelCreated += OnChannelCreatedAsync;
         _client.JoinedGuild += OnJoinedGuildAsync;
+        _client.ReactionAdded += OnReactionAddedAsync;
+        _client.ReactionRemoved += OnReactionRemovedAsync;
 
         _commands.CommandExecuted += OnCommandExecutedAsync;
 
         await Task.CompletedTask;
     }
+
+    private Task OnReactionRemovedAsync(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3)
+        => _mediator.Publish(new ReactionRemovedNotification(arg1, arg2, arg3), _cancellationToken);
+
+    private Task OnReactionAddedAsync(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3)
+        => _mediator.Publish(new ReactionAddedNotification(arg1, arg2, arg3), _cancellationToken);
 
     private async Task OnJoinedGuildAsync(SocketGuild arg)
         => await _mediator.Publish(new GuildJoinedNotification(arg), _cancellationToken);
