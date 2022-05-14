@@ -38,7 +38,5 @@ public class MemeModule : ModuleBase<SocketCommandContext>
 
         var embed = builder.Build();
         await ReplyAsync(embed: embed);
-
-        _logger.LogInformation($"{Context.User.Username} executed the meme command!");
     }
 }

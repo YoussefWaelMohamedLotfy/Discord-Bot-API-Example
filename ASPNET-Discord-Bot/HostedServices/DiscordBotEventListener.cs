@@ -26,7 +26,6 @@ public class DiscordBotEventListener
         _cancellationToken = new CancellationTokenSource().Token;
     }
 
-
     public async Task StartAsync()
     {
         _client.Log += OnLogReceivedAsync;

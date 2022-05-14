@@ -23,7 +23,5 @@ public class ModerationModule : ModuleBase<SocketCommandContext>
         var message = await ReplyAsync($"{messages.Count()} messages deleted Successfully!");
         await Task.Delay(2500);
         await message.DeleteAsync();
-
-        _logger.LogInformation($"{Context.User.Username} executed the purge command!");
     }
 }

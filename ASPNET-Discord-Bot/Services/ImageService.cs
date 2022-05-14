@@ -5,7 +5,7 @@ using System.Drawing.Text;
 
 namespace ASPNET_Discord_Bot.Services;
 
-public class ImageService
+public class ImageService : IImageService
 {
     public async Task<string> CreateImageAsync(SocketGuildUser user)
     {

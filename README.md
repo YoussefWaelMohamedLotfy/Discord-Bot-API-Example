@@ -1,5 +1,5 @@
 # Discord Bot API Example
-Demo of [Discord Bot API](https://discord.com/developers/docs/intro), powered with an ASP.NET Backend.
+Demo of [Discord Bot API](https://discord.com/developers/docs/intro), powered with an ASP.NET Core Backend.
 
 Join the ASP.NET Example Server from this [Invitation Link](https://discord.gg/sRz2RZ4GgN).
 

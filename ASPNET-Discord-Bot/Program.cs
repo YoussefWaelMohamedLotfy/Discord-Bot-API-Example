@@ -19,26 +19,22 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 // Configure DI Services
-builder.Services.AddSingleton<DiscordSocketClient>();
-builder.Services.AddSingleton<CommandService>();
+builder.Services.AddSingleton(s => new DiscordSocketClient(new()
+{
+    LogLevel = LogSeverity.Verbose,
+    AlwaysDownloadUsers = true,
+    MessageCacheSize = 200,
+}));
+builder.Services.AddSingleton(s => new CommandService(new() 
+{
+    LogLevel = LogSeverity.Verbose,
+    CaseSensitiveCommands = false,
+    DefaultRunMode = RunMode.Async,
+}));
 builder.Services.AddSingleton<DiscordBotEventListener>();
-builder.Services.AddSingleton<ImageService>();
+builder.Services.AddSingleton<IImageService, ImageService>();
 
 builder.Services.AddHostedService<DiscordBotInitializer>();
-
-builder.Services.Configure<DiscordSocketConfig>(options =>
-{
-    options.LogLevel = LogSeverity.Verbose;
-    options.AlwaysDownloadUsers = true;
-    options.MessageCacheSize = 200;
-});
-
-builder.Services.Configure<CommandServiceConfig>(options =>
-{
-    options.LogLevel = LogSeverity.Verbose;
-    options.CaseSensitiveCommands = true;
-    options.DefaultRunMode = RunMode.Async;
-});
 
 builder.Services.AddMediatR(Assembly.GetEntryAssembly()!);
 

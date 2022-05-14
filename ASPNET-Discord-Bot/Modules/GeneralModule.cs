@@ -7,9 +7,9 @@ namespace ASPNET_Discord_Bot.Modules;
 
 public class GeneralModule : ModuleBase<SocketCommandContext>
 {
-    private readonly ImageService _imageService;
+    private readonly IImageService _imageService;
 
-    public GeneralModule(ImageService imageService)
+    public GeneralModule(IImageService imageService)
     {
         _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
     }
