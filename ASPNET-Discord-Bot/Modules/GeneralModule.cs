@@ -23,7 +23,7 @@ public class GeneralModule : ModuleBase<SocketCommandContext>
         await ReplyAsync($"Result: {result}");
     }
 
-    [Command("image", RunMode = RunMode.Async)]
+    [Command("image")]
     public async Task Image(SocketGuildUser user)
     {
         var path = await _imageService.CreateImageAsync(user);

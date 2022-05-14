@@ -1,5 +1,6 @@
 using ASPNET_Discord_Bot.HostedServices;
 using ASPNET_Discord_Bot.Services;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using MediatR;
@@ -24,6 +25,20 @@ builder.Services.AddSingleton<DiscordBotEventListener>();
 builder.Services.AddSingleton<ImageService>();
 
 builder.Services.AddHostedService<DiscordBotInitializer>();
+
+builder.Services.Configure<DiscordSocketConfig>(options =>
+{
+    options.LogLevel = LogSeverity.Verbose;
+    options.AlwaysDownloadUsers = true;
+    options.MessageCacheSize = 200;
+});
+
+builder.Services.Configure<CommandServiceConfig>(options =>
+{
+    options.LogLevel = LogSeverity.Verbose;
+    options.CaseSensitiveCommands = true;
+    options.DefaultRunMode = RunMode.Async;
+});
 
 builder.Services.AddMediatR(Assembly.GetEntryAssembly()!);
 
