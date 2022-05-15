@@ -2,6 +2,7 @@ using ASPNET_Discord_Bot.HostedServices;
 using ASPNET_Discord_Bot.Services;
 using Discord;
 using Discord.Commands;
+using Discord.Interactions;
 using Discord.WebSocket;
 using MediatR;
 using Serilog;
@@ -31,7 +32,12 @@ builder.Services.AddSingleton(s => new CommandService(new()
 {
     LogLevel = LogSeverity.Verbose,
     CaseSensitiveCommands = false,
-    DefaultRunMode = RunMode.Async,
+    DefaultRunMode = Discord.Commands.RunMode.Async,
+}));
+builder.Services.AddSingleton(s => new InteractionService(s.GetRequiredService<DiscordSocketClient>(), new() 
+{ 
+    LogLevel = LogSeverity.Verbose,
+    DefaultRunMode = Discord.Interactions.RunMode.Async,
 }));
 builder.Services.AddSingleton<DiscordBotEventListener>();
 builder.Services.AddSingleton<IImageService, ImageService>();

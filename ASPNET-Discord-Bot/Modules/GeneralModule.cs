@@ -20,6 +20,7 @@ public class GeneralModule : ModuleBase<SocketCommandContext>
         var dt = new DataTable();
         var result = dt.Compute(math, null);
 
+        await Context.Channel.TriggerTypingAsync();
         await ReplyAsync($"Result: {result}");
     }
 
